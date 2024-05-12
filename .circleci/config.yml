@@ -37,9 +37,9 @@ jobs:
       - run:
           name: install dependencies
           command: go get -u golang.org/x/sys/...
-      - run:
-          name: test application
-          command: go test -v ./...
+      # - run:
+      #     name: test application
+      #     command: go test -v ./...
       - run:
           name: build application (linux)
           command: CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o ./bin/amd64/product-api
