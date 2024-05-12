@@ -14,7 +14,8 @@ type User struct {
 	CreatedAt string         `db:"created_at" json:"-"`
 	UpdatedAt string         `db:"updated_at" json:"-"`
 	DeletedAt sql.NullString `db:"deleted_at" json:"-"`
-	Orders    []Orders       `json:"orders"`
+	// Orders    []Orders       `json:"orders"`
+	Foods	  []Foods		 `json:"foods"`
 }
 
 // FromJSON serializes data from json
