@@ -126,6 +126,8 @@ github.com/grpc-ecosystem/go-grpc-prometheus v1.2.0/go.mod h1:8NvIoxWQoOIhqOTXgf
 github.com/grpc-ecosystem/grpc-gateway v1.9.0/go.mod h1:vNeuVxBJEsws4ogUvrchl83t/GYV9WGTSLVdBhOQFDY=
 github.com/hashicorp-demoapp/go-hckit v0.0.2 h1:mQ02OCFzxlCv0pv9zeAZDwAp7esCRYn99FhJ+QuOCE0=
 github.com/hashicorp-demoapp/go-hckit v0.0.2/go.mod h1:mhJOg3le42ccvVkMx1+uhflTHZK0bZ/rBiUbKYAYJnQ=
+github.com/hashicorp-demoapp/product-api-go v0.0.22 h1:q+n0A82NyxG1BcUN+knjPUHJ/UdaqXmb6sczEXxA4ug=
+github.com/hashicorp-demoapp/product-api-go v0.0.22/go.mod h1:vT+3zlCZkJD02T2SrPQre0Igww77RmBGmC43WuYLE80=
 github.com/hashicorp/go-hclog v0.10.0 h1:b86HUuA126IcSHyC55WjPo7KtCOVeTCKIjr+3lBhPxI=
 github.com/hashicorp/go-hclog v0.10.0/go.mod h1:whpDNt7SSdeAju8AWKIWsul05p54N/39EeqMAyrmvFQ=
 github.com/hashicorp/go-version v1.0.0/go.mod h1:fltr4n8CU8Ke44wwGCBoEymUuxUHl09ZGVZPK5anwXA=

@@ -11,10 +11,10 @@ import (
 	"github.com/rs/cors"
 
 	"github.com/gorilla/mux"
-	"github.com/hashicorp-demoapp/product-api-go/config"
-	"github.com/hashicorp-demoapp/product-api-go/data"
-	"github.com/hashicorp-demoapp/product-api-go/handlers"
-	"github.com/hashicorp-demoapp/product-api-go/telemetry"
+	"github.com/ptptsw/product-api-go/config"
+	"github.com/ptptsw/product-api-go/data"
+	"github.com/ptptsw/product-api-go/handlers"
+	"github.com/ptptsw/product-api-go/telemetry"
 	"github.com/hashicorp/go-hclog"
 )
 

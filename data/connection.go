@@ -4,7 +4,7 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/hashicorp-demoapp/product-api-go/data/model"
+	"github.com/ptptsw/product-api-go/data/model"
 	//"database/sql"
 	"github.com/jmoiron/sqlx"
 	_ "github.com/lib/pq"
@@ -23,7 +23,7 @@ type Connection interface {
 	CreateOrder(int, []model.OrderItems) (model.Order, error)
 	UpdateOrder(int, int, []model.OrderItems) (model.Order, error)
 	DeleteOrder(int, int) error
-	GetFoods(int, *int) (model.Food, error)
+	GetFoods(int, *int) (model.Foods, error)
 	CreateFood(int, []model.FoodItems) (model.Food, error)
 	UpdateFood(int, int, []model.FoodItems) (model.Food, error)
 	DeleteFood(int, int) error

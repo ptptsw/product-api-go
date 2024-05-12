@@ -7,8 +7,8 @@ import (
 	"strconv"
 
 	"github.com/gorilla/mux"
-	"github.com/hashicorp-demoapp/product-api-go/data"
-	"github.com/hashicorp-demoapp/product-api-go/data/model"
+	"github.com/ptptsw/product-api-go/data"
+	"github.com/ptptsw/product-api-go/data/model"
 	"github.com/hashicorp/go-hclog"
 )
 

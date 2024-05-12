@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/hashicorp-demoapp/product-api-go/data"
-	"github.com/hashicorp-demoapp/product-api-go/telemetry"
+	"github.com/ptptsw/product-api-go/data"
+	"github.com/ptptsw/product-api-go/telemetry"
 	"github.com/hashicorp/go-hclog"
 )
 

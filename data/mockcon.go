@@ -1,7 +1,7 @@
 package data
 
 import (
-	"github.com/hashicorp-demoapp/product-api-go/data/model"
+	"github.com/ptptsw/product-api-go/data/model"
 	"github.com/stretchr/testify/mock"
 )
 

@@ -3,18 +3,15 @@ module github.com/ptptsw/product-api-go
 go 1.17
 
 require (
-	github.com/HdrHistogram/hdrhistogram-go v1.1.0 // indirect
 	github.com/cucumber/godog v0.9.0
 	github.com/cucumber/messages-go/v10 v10.0.3
 	github.com/fsnotify/fsnotify v1.4.7
-	github.com/go-sql-driver/mysql v1.4.1 // indirect
 	github.com/golang-jwt/jwt/v4 v4.1.0
 	github.com/gorilla/mux v1.7.3
 	github.com/hashicorp-demoapp/go-hckit v0.0.2
 	github.com/hashicorp/go-hclog v0.10.0
 	github.com/jmoiron/sqlx v1.2.0
 	github.com/lib/pq v1.2.0
-	github.com/mattn/go-sqlite3 v1.11.0 // indirect
 	github.com/nicholasjackson/env v0.5.0
 	github.com/rs/cors v1.8.2
 	github.com/stretchr/testify v1.7.0
@@ -23,6 +20,8 @@ require (
 	golang.org/x/sys v0.0.0-20191210023423-ac6580df4449 // indirect
 	golang.org/x/xerrors v0.0.0-20200804184101-5ec99f83aff1
 )
+
+require github.com/hashicorp-demoapp/product-api-go v0.0.22
 
 require (
 	github.com/DataDog/sketches-go v0.0.0-20190923095040-43f19ad77ff7 // indirect
@@ -33,7 +32,6 @@ require (
 	github.com/gofrs/uuid v3.2.0+incompatible // indirect
 	github.com/gogo/protobuf v1.3.1 // indirect
 	github.com/golang/protobuf v1.3.2 // indirect
-	github.com/google/go-cmp v0.5.4 // indirect
 	github.com/mattn/go-colorable v0.1.4 // indirect
 	github.com/mattn/go-isatty v0.0.10 // indirect
 	github.com/matttproud/golang_protobuf_extensions v1.0.1 // indirect

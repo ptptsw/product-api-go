@@ -4,7 +4,7 @@ import (
 	"net/http"
 
 	"github.com/golang-jwt/jwt/v4"
-	"github.com/hashicorp-demoapp/product-api-go/data"
+	"github.com/ptptsw/product-api-go/data"
 	"github.com/hashicorp/go-hclog"
 )
 

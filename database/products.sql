@@ -64,6 +64,25 @@ CREATE TABLE order_items (
     deleted_at TIMESTAMP
 );
 
+CREATE TABLE foods (
+    id serial PRIMARY KEY,
+    user_id int references users(id),
+    created_at TIMESTAMP NOT NULL,
+    updated_at TIMESTAMP NOT NULL,
+    deleted_at TIMESTAMP
+);
+
+CREATE TABLE food_items (
+    id serial PRIMARY KEY,
+    food_id int references foods(id),
+    name string NOT NULL,
+    price int NOT NULL,
+    created_at TIMESTAMP NOT NULL,
+    updated_at TIMESTAMP NOT NULL,
+    deleted_at TIMESTAMP
+);
+
+
 INSERT INTO ingredients (id, name, created_at, updated_at) VALUES (1, 'Espresso', CURRENT_DATE, CURRENT_DATE);
 INSERT INTO ingredients (id, name, created_at, updated_at) VALUES (2, 'Semi Skimmed Milk', CURRENT_DATE, CURRENT_DATE);
 INSERT INTO ingredients (id, name, created_at, updated_at) VALUES (3, 'Hot Water', CURRENT_DATE, CURRENT_DATE);
