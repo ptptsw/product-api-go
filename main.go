@@ -121,6 +121,14 @@ func main() {
 	r.Handle("/orders/{id:[0-9]+}", authMiddleware.IsAuthorized(orderHandler.UpdateOrder)).Methods("PUT")
 	r.Handle("/orders/{id:[0-9]+}", authMiddleware.IsAuthorized(orderHandler.DeleteOrder)).Methods("DELETE")
 
+	foodHandler := handlers.NewFood(db, logger)
+	r.Handle("/food", authMiddleware.IsAuthorized(foodHandler.GetUserFood)).Methods("GET")
+	r.Handle("/food", authMiddleware.IsAuthorized(foodHandler.CreateFood)).Methods("POST")
+	r.Handle("/food/{id:[0-9]+}", authMiddleware.IsAuthorized(foodHandler.GetUserFood)).Methods("GET")
+	r.Handle("/food/{id:[0-9]+}", authMiddleware.IsAuthorized(foodHandler.UpdateFood)).Methods("PUT")
+	r.Handle("/food/{id:[0-9]+}", authMiddleware.IsAuthorized(foodHandler.DeleteFood)).Methods("DELETE")
+
+
 	logger.Info("Starting service", "bind", conf.BindAddress, "metrics", conf.MetricsAddress)
 	err = http.ListenAndServe(conf.BindAddress, r)
 	if err != nil {

@@ -1,4 +1,4 @@
-module github.com/hashicorp-demoapp/product-api-go
+module github.com/ptptsw/product-api-go
 
 go 1.17
 
