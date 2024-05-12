@@ -23,6 +23,10 @@ type Connection interface {
 	CreateOrder(int, []model.OrderItems) (model.Order, error)
 	UpdateOrder(int, int, []model.OrderItems) (model.Order, error)
 	DeleteOrder(int, int) error
+	GetFoods(int, *int) (model.Food, error)
+	CreateFood(int, []model.FoodItems) (model.Food, error)
+	UpdateFood(int, int, []model.FoodItems) (model.Food, error)
+	DeleteFood(int, int) error
 	CreateCoffee(model.Coffee) (model.Coffee, error)
 	UpsertCoffeeIngredient(model.Coffee, model.Ingredient) (model.CoffeeIngredient, error)
 }
@@ -421,6 +425,195 @@ func (c *PostgresSQL) DeleteOrder(userID int, orderID int) error {
 
 	return nil
 }
+
+// GetOrders returns orders from the database
+func (c *PostgresSQL) GetFoods(userID int, foodID *int) (model.Foods, error) {
+	foods := model.Foods{}
+
+	if foodID != nil {
+		err := c.db.Select(&foods,
+			`SELECT * FROM foods WHERE user_id = $1 AND id = $2 AND deleted_at IS NULL`,
+			userID, foodID)
+		if err != nil {
+			return nil, err
+		}
+	} else {
+		err := c.db.Select(&foods,
+			`SELECT * FROM foods WHERE user_id = $1 AND deleted_at IS NULL`,
+			userID)
+		if err != nil {
+			return nil, err
+		}
+	}
+
+	// fetch the coffee for each food
+	for n, food := range foods {
+		items := []model.FoodItems{}
+		err := c.db.Select(&items,
+			`SELECT * FROM food_items WHERE food_id=$1 AND deleted_at IS NULL`, food.ID)
+		if err != nil {
+			return nil, err
+		}
+		foods[n].Items = items
+	}
+
+	return foods, nil
+}
+
+// CreateFood creates a new food in the database
+func (c *PostgresSQL) CreateFood(userID int, foodItems []model.FoodItems) (model.Food, error) {
+	tx := c.db.MustBegin()
+
+	o := model.Food{}
+	rows, err := tx.NamedQuery(
+		`INSERT INTO foods (user_id, created_at, updated_at) 
+		VALUES (:user_id, now(), now()) RETURNING id`, map[string]interface{}{
+			"user_id": userID,
+		})
+	if err != nil {
+		return o, err
+	}
+	if rows.Next() {
+		err := rows.StructScan(&o)
+		if err != nil {
+			tx.Rollback()
+			return o, err
+		}
+	}
+
+	rows.Close()
+
+	for _, item := range foodItems {
+		_, err = tx.NamedExec(
+			`INSERT INTO food_items (food_id, name, price, created_at, updated_at) 
+			VALUES (:food_id, :name, :price, now(), now())`, map[string]interface{}{
+				"food_id":  o.ID,
+				"name": item.Name,
+				"price":  item.Price,
+			})
+		if err != nil {
+			tx.Rollback()
+			return o, err
+		}
+	}
+
+	err = tx.Commit()
+	if err != nil {
+		return o, err
+	}
+
+	foods, err := c.GetFoods(userID, &o.ID)
+	if err != nil {
+		return o, err
+	}
+
+	if len(foods) == 0 {
+		return o, err
+	}
+
+	return foods[0], nil
+}
+
+// UpdateFood updates an existing food in the database
+func (c *PostgresSQL) UpdateFood(userID int, foodID int, foodItems []model.FoodItems) (model.Food, error) {
+	tx := c.db.MustBegin()
+
+	o := model.Food{}
+	rows, err := tx.NamedQuery(
+		`UPDATE foods SET updated_at = now()
+		WHERE user_id = :user_id AND id = :food_id RETURNING *`, map[string]interface{}{
+			"user_id":  userID,
+			"food_id": foodID,
+		})
+	if err != nil {
+		return o, err
+	}
+	if rows.Next() {
+		err := rows.StructScan(&o)
+		if err != nil {
+			tx.Rollback()
+			return o, err
+		}
+	}
+
+	rows.Close()
+
+	// remove existing items from food
+	_, err = tx.NamedExec(
+		`UPDATE food_items SET deleted_at = now()
+		WHERE food_id = :food_id AND deleted_at IS NULL`, map[string]interface{}{
+			"food_id": foodID,
+		})
+	if err != nil {
+		tx.Rollback()
+		return o, err
+	}
+
+	for _, item := range foodItems {
+		_, err = tx.NamedExec(
+			`INSERT INTO food_items (food_id, name, price, created_at, updated_at) 
+			VALUES (:food_id, :name, :price, now(), now())`, map[string]interface{}{
+				"food_id":  o.ID,
+				"name": item.Name,
+				"price":  item.Price,
+			})
+		if err != nil {
+			tx.Rollback()
+			return o, err
+		}
+	}
+
+	err = tx.Commit()
+	if err != nil {
+		return o, err
+	}
+
+	foods, err := c.GetFoods(userID, &foodID)
+	if err != nil {
+		return o, err
+	}
+
+	if len(foods) > 0 {
+		return o, err
+	}
+
+	return foods[0], nil
+}
+
+// DeleteFood deletes an existing food in the database
+func (c *PostgresSQL) DeleteFood(userID int, foodID int) error {
+	tx := c.db.MustBegin()
+
+	// remove existing items from food
+	_, err := tx.NamedExec(
+		`UPDATE food_items SET deleted_at = now()
+		WHERE food_id = :food_id AND deleted_at IS NULL`, map[string]interface{}{
+			"food_id": foodID,
+		})
+	if err != nil {
+		tx.Rollback()
+		return err
+	}
+
+	_, err = tx.NamedExec(
+		`UPDATE foods SET deleted_at = now()
+		WHERE user_id = :user_id AND id = :food_id AND deleted_at IS NULL`, map[string]interface{}{
+			"user_id":  userID,
+			"food_id": foodID,
+		})
+	if err != nil {
+		tx.Rollback()
+		return err
+	}
+
+	err = tx.Commit()
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
 
 // CreateCoffee creates a new coffee
 func (c *PostgresSQL) CreateCoffee(coffee model.Coffee) (model.Coffee, error) {
