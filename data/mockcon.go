@@ -135,6 +135,51 @@ func (c *MockConnection) DeleteOrder(userID int, orderID int) error {
 	return nil
 }
 
+// GetFoods -
+func (c *MockConnection) GetFoods(userID int, foodID *int) (model.Foods, error) {
+	args := c.Called()
+
+	if m, ok := args.Get(0).(model.Foods); ok {
+		return m, args.Error(1)
+	}
+
+	return nil, args.Error(1)
+}
+
+// CreateFood -
+func (c *MockConnection) CreateFood(userID int, foodItems []model.FoodItems) (model.Food, error) {
+	args := c.Called()
+
+	if m, ok := args.Get(0).(model.Food); ok {
+		return m, args.Error(1)
+	}
+
+	return model.Food{}, args.Error(1)
+}
+
+// UpdateFood -
+func (c *MockConnection) UpdateFood(userID int, foodID int, foodItems []model.FoodItems) (model.Food, error) {
+	args := c.Called()
+
+	if m, ok := args.Get(0).(model.Food); ok {
+		return m, args.Error(1)
+	}
+
+	return model.Food{}, args.Error(1)
+}
+
+// DeleteFood -
+func (c *MockConnection) DeleteFood(userID int, foodID int) error {
+	args := c.Called()
+
+	if err, ok := args.Get(0).(error); ok {
+		return err
+	}
+
+	return nil
+}
+
+
 // CreateCoffee creates a new coffee type
 func (c *MockConnection) CreateCoffee(coffee model.Coffee) (model.Coffee, error) {
 	args := c.Called()
