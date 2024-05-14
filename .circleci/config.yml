@@ -1,7 +1,6 @@
 version: 2.1
 
 commands:
-
   configure-dockerhub:
     description: Configure Docker Hub access
     steps:
@@ -127,7 +126,7 @@ jobs:
       - run:
           name: "Publish Release on GitHub"
           command: |
-            ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -replace ${CIRCLE_TAG} ./bin/
+            ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${PROJECT_REPONAME} -replace ${CIRCLE_TAG} ./bin/
 
 workflows:
   version: 2
