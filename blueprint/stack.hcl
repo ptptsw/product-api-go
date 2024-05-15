@@ -39,7 +39,7 @@ container "api" {
     }
 
     image {
-        name = "hashicorpdemoapp/product-api:v0.0.21"
+        name = "ptptsw/product-api:v0.0.2"
     }
 
     volume {

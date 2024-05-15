@@ -6,7 +6,7 @@ import (
 	"net/http"
 
 	hckit "github.com/hashicorp-demoapp/go-hckit"
-	"github.com/hashicorp-demoapp/product-api-go/data/model"
+	"github.com/ptptsw/product-api-go/data/model"
 )
 
 // HTTP contains all client details
