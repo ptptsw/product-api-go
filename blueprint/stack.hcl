@@ -8,7 +8,7 @@ container "db" {
     }
 
     image {
-        name = "hashicorpdemoapp/product-api-db:v0.0.21"
+        name = "ptptsw/product-api-db:v0.0.2"
     }
 
     env {
