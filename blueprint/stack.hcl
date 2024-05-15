@@ -8,7 +8,7 @@ container "db" {
     }
 
     image {
-        name = "ptptsw/product-api-db:v0.0.2"
+        name = "ptptsw/product-api-db:v0.0.4"
     }
 
     env {
@@ -39,7 +39,7 @@ container "api" {
     }
 
     image {
-        name = "ptptsw/product-api:v0.0.2"
+        name = "ptptsw/product-api:v0.0.4"
     }
 
     volume {
