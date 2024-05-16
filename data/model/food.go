@@ -45,8 +45,8 @@ func (o *Food) ToJSON() ([]byte, error) {
 type FoodItems struct {
 	ID        int            `db:"id" json:"-"`
 	FoodID    int            `db:"food_id" json:"-"`
-	Name      string         `db:"name" json:"name"`
-	Price     float64        `db:"price" json:"price"`
+	Name      string         `db:"name" json:"name,omitempty"`
+	Price     float64        `db:"price" json:"price,omitempty"`
 	CreatedAt string         `db:"created_at" json:"-"`
 	UpdatedAt string         `db:"updated_at" json:"-"`
 	DeletedAt sql.NullString `db:"deleted_at" json:"-"`

@@ -34,15 +34,17 @@ func (c *Food) GetUserFoods(userID int, rw http.ResponseWriter, r *http.Request)
 
 	foods, err := c.con.GetFoods(userID, nil)
 	if err != nil {
-		c.log.Error("Unable to get food from database", "error", err)
+		// c.log.Error("Unable to get food from database", "error", err)
+		http.Error(rw, "Unable to get food from database", http.StatusInternalServerError)
 		http.Error(rw, "Unable to list foods", http.StatusInternalServerError)
 		return
 	}
 
 	d, err := foods.ToJSON()
 	if err != nil {
-		c.log.Error("Unable to convert foods to JSON", "error", err)
-		http.Error(rw, "Unable to list foods", http.StatusInternalServerError)
+		// c.log.Error("Unable to convert foods to JSON", "error", err)
+		http.Error(rw, "Unable to convert foods to JSON", http.StatusInternalServerError)
+		http.Error(rw, "Unable to get food from database", http.StatusInternalServerError)
 		return
 	}
 
