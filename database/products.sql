@@ -63,7 +63,6 @@ CREATE TABLE order_items (
     updated_at TIMESTAMP NOT NULL,
     deleted_at TIMESTAMP
 );
-
 CREATE TABLE foods (
     id serial PRIMARY KEY,
     user_id int references users(id),
@@ -71,7 +70,6 @@ CREATE TABLE foods (
     updated_at TIMESTAMP NOT NULL,
     deleted_at TIMESTAMP
 );
-
 CREATE TABLE food_items (
     id serial PRIMARY KEY,
     food_id int references foods(id),
