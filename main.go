@@ -122,7 +122,7 @@ func main() {
 	r.Handle("/orders/{id:[0-9]+}", authMiddleware.IsAuthorized(orderHandler.DeleteOrder)).Methods("DELETE")
 
 	foodHandler := handlers.NewFood(db, logger)
-	r.Handle("/food", authMiddleware.IsAuthorized(foodHandler.GetUserFood)).Methods("GET")
+	r.Handle("/food", authMiddleware.IsAuthorized(foodHandler.GetUserFoods)).Methods("GET")
 	r.Handle("/food", authMiddleware.IsAuthorized(foodHandler.CreateFood)).Methods("POST")
 	r.Handle("/food/{id:[0-9]+}", authMiddleware.IsAuthorized(foodHandler.GetUserFood)).Methods("GET")
 	r.Handle("/food/{id:[0-9]+}", authMiddleware.IsAuthorized(foodHandler.UpdateFood)).Methods("PUT")
