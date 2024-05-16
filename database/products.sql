@@ -75,7 +75,7 @@ CREATE TABLE foods (
 CREATE TABLE food_items (
     id serial PRIMARY KEY,
     food_id int references foods(id),
-    name string NOT NULL,
+    name VARCHAR (255) NOT NULL UNIQUE,
     price int NOT NULL,
     created_at TIMESTAMP NOT NULL,
     updated_at TIMESTAMP NOT NULL,
