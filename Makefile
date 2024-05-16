@@ -1,6 +1,6 @@
 CONTAINER_NAME=ptptsw/product-api
 DB_CONTAINER_NAME=ptptsw/product-api-db
-CONTAINER_VERSION=v0.0.6
+CONTAINER_VERSION=v0.0.7
 
 test_functional:
 	shipyard run ./blueprint

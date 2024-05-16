@@ -528,6 +528,8 @@ func (c *PostgresSQL) UpdateFood(userID int, foodID int, foodItems []model.FoodI
 	if err != nil {
 		return o, err
 	}
+	fmt.Print("[Custom Debug] 1. pass NamedQuery")
+
 	if rows.Next() {
 		err := rows.StructScan(&o)
 		if err != nil {
@@ -537,7 +539,7 @@ func (c *PostgresSQL) UpdateFood(userID int, foodID int, foodItems []model.FoodI
 	}
 
 	rows.Close()
-
+	fmt.Print("[Custom Debug] 2. read rows")
 	// remove existing items from food
 	_, err = tx.NamedExec(
 		`UPDATE food_items SET deleted_at = now()
@@ -548,6 +550,7 @@ func (c *PostgresSQL) UpdateFood(userID int, foodID int, foodItems []model.FoodI
 		tx.Rollback()
 		return o, err
 	}
+	fmt.Print("[Custom Debug] 3. remove existing items from food")
 
 	for _, item := range foodItems {
 		_, err = tx.NamedExec(
@@ -562,16 +565,20 @@ func (c *PostgresSQL) UpdateFood(userID int, foodID int, foodItems []model.FoodI
 			return o, err
 		}
 	}
+	fmt.Print("[Custom Debug] 4. Insert update food item")
 
 	err = tx.Commit()
 	if err != nil {
 		return o, err
 	}
 
+	fmt.Print("[Custom Debug] 5. Commit")
+
 	foods, err := c.GetFoods(userID, &foodID)
 	if err != nil {
 		return o, err
 	}
+	fmt.Print("[Custom Debug] 6. Get foods")
 
 	if len(foods) > 0 {
 		return o, err
